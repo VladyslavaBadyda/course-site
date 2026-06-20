@@ -1,42 +1,38 @@
-const menuButton = document.querySelector(".menu-button");
-const navigation = document.querySelector(".nav");
-const form = document.querySelector("#course-form");
-const courseSelect = document.querySelector("#course-select");
-
-menuButton.addEventListener("click", () => {
-    const isOpen = navigation.classList.toggle("open");
-    menuButton.setAttribute("aria-expanded", String(isOpen));
-});
-
-navigation.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-        navigation.classList.remove("open");
-        menuButton.setAttribute("aria-expanded", "false");
-    });
-});
-
-document.querySelectorAll(".course-select").forEach((button) => {
-    button.addEventListener("click", () => {
-        courseSelect.value = button.dataset.course;
-        document.querySelector("#apply").scrollIntoView({ behavior: "smooth" });
-    });
-});
-
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    const selectedCourse = courseSelect.value.trim();
+    const honeypot = document.querySelector("#honeypot").value; // приховане поле
+
+    if (!selectedCourse) {
+        alert("Будь ласка, оберіть курс");
+        return;
+    }
+
+    // Показуємо успіх
     form.querySelector(".form-success").classList.add("visible");
-});
 
-const observer = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                observer.unobserve(entry.target);
-            }
+    try {
+        const response = await fetch("/.netlify/functions/create-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                course: selectedCourse,
+                honeypot: honeypot   // для перевірки ботів
+            })
         });
-    },
-    { threshold: 0.12 }
-);
 
-document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+        const data = await response.json();
+
+        if (response.ok && data.paymentUrl) {
+            setTimeout(() => {
+                window.open(data.paymentUrl, "_blank");
+            }, 1300);
+        } else {
+            alert(data.error || "Щось пішло не так");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Помилка з'єднання. Спробуйте пізніше.");
+    }
+});
