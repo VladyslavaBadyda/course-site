@@ -1,29 +1,15 @@
-// netlify/functions/create-payment.js
-
-exports.handler = async function (event, context) {
+exports.handler = async (event) => {
     if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: JSON.stringify({ error: "Метод не дозволено" }) };
+        return { statusCode: 405, body: "Method Not Allowed" };
     }
 
     try {
-        const { course, honeypot } = JSON.parse(event.body);
+        const { course } = JSON.parse(event.body || "{}");
 
-        // Захист від ботів
-        if (honeypot) {
-            console.log("Бот спробував відправити форму");
-            return { statusCode: 400, body: JSON.stringify({ error: "Помилка" }) };
-        }
-
-        if (!course) {
-            return { statusCode: 400, body: JSON.stringify({ error: "Оберіть курс" }) };
-        }
-
-        // Платіжні посилання — тільки тут!
         const paymentLinks = {
-            "Назва курсу": "https://send.monobank.ua/jar/AAAA",
-            "Назва курсу 2": "https://send.monobank.ua/jar/BBBB",
-            "Назва курсу 3": "https://send.monobank.ua/jar/CCCC",
-            // Додавай нові курси сюди
+            "Назва курсу": "https://send.monobank.ua/jar/ТВОЄ_ПОСИЛАННЯ1",
+            "Назва курсу 2": "https://send.monobank.ua/jar/ТВОЄ_ПОСИЛАННЯ2",
+            // додай свої
         };
 
         const paymentUrl = paymentLinks[course];
@@ -32,20 +18,13 @@ exports.handler = async function (event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: "Невідомий курс" }) };
         }
 
-        // Логування (буде видно в Netlify dashboard)
-        console.log(`✅ Нова заявка: ${course} | IP: ${event.headers['client-ip'] || 'unknown'}`);
+        console.log(`Оплата: ${course}`);
 
         return {
             statusCode: 200,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                paymentUrl,
-                message: "Ок"
-            })
+            body: JSON.stringify({ paymentUrl })
         };
-
-    } catch (error) {
-        console.error(error);
-        return { statusCode: 500, body: JSON.stringify({ error: "Помилка сервера" }) };
+    } catch (e) {
+        return { statusCode: 500, body: "Server Error" };
     }
 };
