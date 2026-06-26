@@ -207,26 +207,27 @@
                 </label>
                 <label>
                     <span>Оберіть курс</span>
-                    <select name="course" id="course-select" required>
-                        <option value="">Оберіть зі списку</option>
-                        <option>Назва курсу</option>
-                        <option>Назва курсу</option>
-                        <option>Назва курсу</option>
-                    </select>
+                    <label>
+                        <span>Оберіть курс</span>
+                        <select name="course" id="course-select" required>
+                            <option value="">Оберіть зі списку</option>
+                            <option value="Кухня без страху">Кухня без страху</option>
+                            <option value="Тісто й випічка">Тісто й випічка</option>
+                            <option value="Вечеря як подія">Вечеря як подія</option>
+                        </select>
+                    </label>
                 </label>
                 <label class="checkbox">
                     <input type="checkbox" required />
                     <span>Погоджуюся з політикою конфіденційності</span>
                 </label>
-                <button class="button payment-button" type="submit">
+                <button class="button payment-button" type="button" id="pay-button">
                     Перейти до оплати <span>→</span>
                 </button>
                 <p class="secure-note">🔒 Безпечна оплата карткою через платіжний сервіс</p>
                 <div class="form-success" role="status">
                     Дякуємо! Заявку прийнято. Підключення платіжної системи — наступний крок.
                 </div>
-                <!-- Honeypot — приховане поле для ботів -->
-                <input type="text" id="honeypot" name="honeypot" style="display:none;" autocomplete="off">
             </form>
         </section>
     </main>
@@ -260,6 +261,55 @@
     </a>
 
     <script src="script.js"></script>
+    <script>
+        // ==================== ПРОСТИЙ ВАРІАНТ ОПЛАТИ ====================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const payButton = document.getElementById('pay-button');
+
+            if (!payButton) return;
+
+            payButton.addEventListener('click', () => {
+                const form = document.getElementById('course-form');
+                const formData = new FormData(form);
+
+                const name = formData.get('name')?.trim();
+                const email = formData.get('email')?.trim();
+                const phone = formData.get('phone')?.trim();
+                const courseName = formData.get('course');
+
+                if (!name || !email || !courseName || courseName === "") {
+                    alert('Будь ласка, заповніть Ім’я, Email та оберіть курс');
+                    return;
+                }
+
+                // Реквізити для оплати
+                const message = `
+    ✅ Заявка прийнята!
+    
+    Курс: ${courseName}
+    Ім'я: ${name}
+    Email: ${email}
+    Телефон: ${phone || 'не вказаний'}
+    
+    💰 Оплатіть будь ласка на картку Монобанк:
+    4441 1111 2222 3333   ← заміни на свою реальну картку
+    
+    Після оплати обов'язково надішліть чек нам в Telegram:
+    @t.me/@vasyliy_chef
+    
+    Ми відразу надішлемо доступ до курсу.
+            `.trim();
+
+                alert(message);
+
+                // Додатково відкриваємо Telegram
+                window.open('https://t.me/@vladyslava_badyda', '_blank');
+
+                console.log('Заявка:', { name, email, courseName });
+            });
+        });
+    </script>
 </body>
 
 </html>
