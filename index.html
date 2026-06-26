@@ -252,64 +252,45 @@
         </div>
     </footer>
 
-    <a class="telegram-float" href="https://t.me/" target="_blank" rel="noreferrer" aria-label="Написати в Telegram">
+    <a class="telegram-float" href="https://t.me/+380969453376" target="_blank" rel="noreferrer"
+        aria-label="Написати в Telegram">
         <svg viewBox="0 0 24 24" aria-hidden="true">
             <path
                 d="M21.8 3.2 18.6 20c-.2 1.2-.9 1.5-1.9.9l-4.9-3.6-2.3 2.3c-.3.3-.5.5-1 .5l.4-5 9-8.1c.4-.4-.1-.6-.6-.2L6.2 13.7 1.4 12.2c-1-.3-1-1 .2-1.5L20.4 3.5c.9-.3 1.6.2 1.4-.3Z" />
         </svg>
         <span>Написати нам</span>
     </a>
+    <div class="payment-modal" id="payment-modal">
+
+        <div class="payment-modal-content">
+
+            <button class="payment-close" type="button" aria-label="Закрити">
+                ×
+            </button>
+
+            <h2>Оплата курсу</h2>
+
+            <p class="payment-course"></p>
+
+            <p>
+                Натисніть кнопку нижче, щоб перейти до оплати.
+                Після успішної оплати надішліть чек нам у Telegram.
+            </p>
+
+            <a class="pay-link" href="https://send.monobank.ua/jar/328wKBBszo">
+                💳 Оплатити через Monobank
+            </a>
+
+            <a class="telegram-link" href="https://t.me/+380969453376" target="_blank" rel="noopener">
+                ✈️ Надіслати чек
+            </a>
+
+        </div>
+
+    </div>
 
     <script src="script.js"></script>
-    <script>
-        // ==================== ПРОСТИЙ ВАРІАНТ ОПЛАТИ ====================
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const payButton = document.getElementById('pay-button');
-
-            if (!payButton) return;
-
-            payButton.addEventListener('click', () => {
-                const form = document.getElementById('course-form');
-                const formData = new FormData(form);
-
-                const name = formData.get('name')?.trim();
-                const email = formData.get('email')?.trim();
-                const phone = formData.get('phone')?.trim();
-                const courseName = formData.get('course');
-
-                if (!name || !email || !courseName || courseName === "") {
-                    alert('Будь ласка, заповніть Ім’я, Email та оберіть курс');
-                    return;
-                }
-
-                // Реквізити для оплати
-                const message = `
-    ✅ Заявка прийнята!
-    
-    Курс: ${courseName}
-    Ім'я: ${name}
-    Email: ${email}
-    Телефон: ${phone || 'не вказаний'}
-    
-    💰 Оплатіть будь ласка на картку Монобанк:
-    4441 1111 2222 3333   ← заміни на свою реальну картку
-    
-    Після оплати обов'язково надішліть чек нам в Telegram:
-    @t.me/@vasyliy_chef
-    
-    Ми відразу надішлемо доступ до курсу.
-            `.trim();
-
-                alert(message);
-
-                // Додатково відкриваємо Telegram
-                window.open('https://t.me/@vladyslava_badyda', '_blank');
-
-                console.log('Заявка:', { name, email, courseName });
-            });
-        });
-    </script>
 </body>
 
 </html>

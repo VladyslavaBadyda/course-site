@@ -1183,3 +1183,149 @@ h2 em {
         transition: none;
     }
 }
+
+/* ==========================
+        PAYMENT MODAL
+========================== */
+
+.payment-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s ease;
+
+    z-index: 9999;
+}
+
+.payment-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.payment-modal-content {
+    width: min(92%, 500px);
+
+    background: var(--paper);
+
+    color: var(--ink);
+
+    border-radius: 24px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    position: relative;
+
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .25);
+
+    transform: translateY(30px);
+
+    transition: .3s;
+}
+
+.payment-modal.show .payment-modal-content {
+    transform: translateY(0);
+}
+
+.payment-close {
+    position: absolute;
+
+    top: 15px;
+    right: 18px;
+
+    width: 40px;
+    height: 40px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 34px;
+
+    line-height: 1;
+
+    color: var(--ink);
+
+    transition: .2s;
+}
+
+.payment-close:hover {
+    transform: rotate(90deg);
+}
+
+.payment-modal h2 {
+    margin-bottom: 18px;
+}
+
+.payment-course {
+    margin: 20px 0;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: var(--rust);
+}
+
+.pay-link,
+.telegram-link {
+
+    display: block;
+
+    margin-top: 18px;
+
+    padding: 16px 20px;
+
+    border-radius: 14px;
+
+    font-weight: 700;
+
+    transition: .25s;
+
+    text-decoration: none;
+
+    color: white;
+}
+
+.pay-link {
+    background: #00B140;
+}
+
+.pay-link:hover {
+    transform: translateY(-3px);
+}
+
+.telegram-link {
+    background: #229ED9;
+}
+
+.telegram-link:hover {
+    transform: translateY(-3px);
+}
+
+@media (max-width:700px) {
+
+    .payment-modal-content {
+
+        padding: 30px 24px;
+
+        border-radius: 18px;
+    }
+
+    .payment-course {
+
+        font-size: 16px;
+    }
+
+}
