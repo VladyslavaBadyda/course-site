@@ -59,6 +59,8 @@ const closeButton = document.querySelector(".payment-close");
 
 const paymentCourse = document.querySelector(".payment-course");
 
+const telegramLink = document.getElementById("telegram-link");
+
 if (payButton) {
   payButton.addEventListener("click", () => {
 
@@ -69,10 +71,26 @@ if (payButton) {
 
     const data = new FormData(form);
 
+    const name = data.get("name");
+    const course = data.get("course");
+
+    const message =
+      `Добрий день!
+
+Я оплатив(ла) курс.
+
+👤 Ім'я: ${name}
+
+📚 Курс: ${course}
+
+Зараз надішлю чек.`;
+
+    telegramLink.href =
+      `https://t.me/+380969453376?text=${encodeURIComponent(message)}`;
+
     paymentCourse.innerHTML = `
-            Ви обрали курс:
-            <strong>${data.get("course")}</strong>
-        `;
+📚 <strong>${course}</strong>
+`;
 
     modal.classList.add("show");
   });

@@ -207,15 +207,12 @@
                 </label>
                 <label>
                     <span>Оберіть курс</span>
-                    <label>
-                        <span>Оберіть курс</span>
-                        <select name="course" id="course-select" required>
-                            <option value="">Оберіть зі списку</option>
-                            <option value="Кухня без страху">Кухня без страху</option>
-                            <option value="Тісто й випічка">Тісто й випічка</option>
-                            <option value="Вечеря як подія">Вечеря як подія</option>
-                        </select>
-                    </label>
+                    <select name="course" id="course-select" required>
+                        <option value="">Оберіть зі списку</option>
+                        <option value="Кухня без страху">Кухня без страху</option>
+                        <option value="Тісто й випічка">Тісто й випічка</option>
+                        <option value="Вечеря як подія">Вечеря як подія</option>
+                    </select>
                 </label>
                 <label class="checkbox">
                     <input type="checkbox" required />
@@ -268,21 +265,26 @@
                 ×
             </button>
 
-            <h2>Оплата курсу</h2>
+            <h2>✔ Ваша заявка готова</h2>
 
             <p class="payment-course"></p>
 
-            <p>
-                Натисніть кнопку нижче, щоб перейти до оплати.
-                Після успішної оплати надішліть чек нам у Telegram.
+            <p class="payment-text">
+                Натисніть кнопку нижче та оплатіть курс.
             </p>
 
-            <a class="pay-link" href="https://send.monobank.ua/jar/328wKBBszo">
+            <a class="pay-link" href="https://send.monobank.ua/jar/328wKBBszo" target="_blank" rel="noopener">
                 💳 Оплатити через Monobank
             </a>
 
-            <a class="telegram-link" href="https://t.me/+380969453376" target="_blank" rel="noopener">
-                ✈️ Надіслати чек
+            <div class="payment-divider"></div>
+
+            <p class="payment-text">
+                Після успішної оплати натисніть кнопку нижче та надішліть чек.
+            </p>
+
+            <a class="telegram-link" id="telegram-link" href="#" target="_blank" rel="noopener">
+                ✅ Я оплатив(ла)
             </a>
 
         </div>
